@@ -20,16 +20,25 @@ class TaskController extends Controller
     function index()
     {
         $projects = (new ProjectService())->getAll();
-        return view('index', 'projects');
+        return view('index', compact('projects'));
     }
 
-    function listByProject(ListByProjectTaskRequest $request)
+    function listByProject(int $id)
     {
-        $tasks = $this->taskService->listByProject($request->project_id);
+        $tasks = $this->taskService->listByProject($id);
         return response()->json([
             'tasks' => $tasks,
             'success' => true,
             'message' => "Tasks get successfully"
+        ]);
+    }
+
+    function get($id)
+    {
+        $task = $this->taskService->getById($id);
+        return response()->json([
+            'task' => $task,
+            'success' => true,
         ]);
     }
 
@@ -39,6 +48,24 @@ class TaskController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Tasks created successfully"
+        ]);
+    }
+
+    function update(CreateTaskRequest $request, int $id)
+    {
+        $this->taskService->update($id, $request->all());
+        return response()->json([
+            'success' => true,
+            'message' => "Task updated successfully"
+        ]);
+    }
+
+    function delete(int $id)
+    {
+        $this->taskService->delete($id);
+        return response()->json([
+            'success' => true,
+            'message' => "Task deleted successfully"
         ]);
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,9 @@
     @viteReactRefresh
     @vite('resources/js/index.jsx')
 </head>
+
 <body>
-    <div id="root"></div>
+    <div id="root" data-projects="{{json_encode($projects)}}"></div>
 </body>
+
 </html>
